@@ -202,11 +202,13 @@ Unos 7–10 días. La primera versión que ya sirve (fases 0–4 y 6, sin avisos
 - Ideas, Modelos 3D, la comunidad y Opciones: siguen en la interfaz.
 - Iniciar sesión en Google, TikTok o los agentes: una vez, con la interfaz.
 
-## Preguntas abiertas
+## Decisiones (7 de noviembre de 2026)
 
-1. ¿Hermes corre en la misma compu que Sloth o en otra? Cambia la fase 6 (token y túnel).
-2. ¿Telegram, WhatsApp o los dos desde el principio? Telegram es más simple y deja mandar archivos más grandes.
-3. ¿Esto es solo para ti (repo) o entra en la app que se vende?
-4. ¿Qué modelo usa Hermes? Cada mensaje gasta tokens de ese modelo además de los del agente de Sloth; uno barato
-   basta, porque solo elige herramientas.
-5. ¿Hace falta programar en redes desde el chat en la primera versión?
+- Solo Telegram, solo en el repo, Hermes y Sloth en la misma máquina. Fuera: WhatsApp, `VENTA` y los servicios de
+  Windows y Mac.
+- Fase 0 hecha: `docs/adr/0017-solo-agentes-con-hermes.md`. Los avisos van por la plataforma Webhook de Hermes con
+  `deliver_only` (sin gastar tokens): la fase 5 se reduce a un `fetch` firmado. La consulta periódica y la Bot API
+  directa ya no hacen falta.
+- Pendiente: la máquina. La Pi Zero no aguanta Sloth (ver el ADR); hay que elegir entre usarla solo de puente o correr
+  todo en otra máquina.
+- Versión rápida: fases 1, 2 (solo modelo por defecto), 3, 4 y 5 juntas, sin `ligero` ni redes.
