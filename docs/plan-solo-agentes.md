@@ -212,3 +212,9 @@ Unos 7–10 días. La primera versión que ya sirve (fases 0–4 y 6, sin avisos
 - Pendiente: la máquina. La Pi Zero no aguanta Sloth (ver el ADR); hay que elegir entre usarla solo de puente o correr
   todo en otra máquina.
 - Versión rápida: fases 1, 2 (solo modelo por defecto), 3, 4 y 5 juntas, sin `ligero` ni redes.
+- Agente por defecto: OpenCode con la suscripción Go (`server/opencode.ts`, `server/cuenta-opencode.ts`, ADR 0010). La
+  cuenta se conecta una vez por el código de dispositivo, sin navegador en el servidor: `POST /api/opencode/conectar`
+  devuelve una URL y un código, se confirman desde el celular, y `GET /api/opencode/cuenta` dice cuándo quedó. Sus
+  modelos salen como `opencode:opencode-go/<id>` en `/api/state` → `models`. Un solo `opencode serve` atiende todos los
+  hilos, así que gasta menos memoria que un proceso por hilo (Claude Code). La fase 2 (modelo por defecto) toma el
+  primero de Go; los límites de Go (5 horas, semana, mes) ya salen en `GET /api/opencode/limites`.
