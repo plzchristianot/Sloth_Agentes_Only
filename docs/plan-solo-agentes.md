@@ -218,3 +218,5 @@ Unos 7–10 días. La primera versión que ya sirve (fases 0–4 y 6, sin avisos
   modelos salen como `opencode:opencode-go/<id>` en `/api/state` → `models`. Un solo `opencode serve` atiende todos los
   hilos, así que gasta menos memoria que un proceso por hilo (Claude Code). La fase 2 (modelo por defecto) toma el
   primero de Go; los límites de Go (5 horas, semana, mes) ya salen en `GET /api/opencode/limites`.
+- Modelo de Hermes: OpenCode Go (proveedor `opencode-go`, `OPENCODE_GO_API_KEY`, Hermes ≥ 0.21.6), con la misma
+  suscripción que Sloth y su mismo cupo. Detalles y lo que falta confirmar: ADR 0017. La pregunta 4 queda resuelta.

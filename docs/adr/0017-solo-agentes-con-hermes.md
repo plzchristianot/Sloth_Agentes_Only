@@ -58,6 +58,28 @@ Instalación: `curl -fsSL https://hermes-agent.nousresearch.com/install.sh | bas
 Usa Python 3.14 y trae su propio Node y FFmpeg. Linux aarch64 tiene soporte de primer nivel; ARMv6/ARMv7 (32 bits), no.
 No publica un mínimo de RAM.
 
+## El modelo de Hermes: OpenCode Go
+
+Decisión: Hermes usa la misma suscripción de OpenCode Go que Sloth. Revisado en la documentación el 7 de noviembre de 2026.
+
+- Hermes trae OpenCode Go como proveedor propio: llave `OPENCODE_GO_API_KEY` en `~/.hermes/.env` y `provider: opencode-go`
+  (doc de proveedores de Hermes). No hace falta un endpoint personalizado. La llave se copia de la consola de opencode.ai.
+- La doc de OpenCode Go lista a Hermes entre los clientes validados, desde la **v0.21.6**, que manda el encabezado
+  `x-opencode-session`. Sin esa versión, no. Es lo que dice la página; no garantiza que siga así.
+- Condiciones de Hermes para el modelo: **al menos 64 000 tokens de contexto** y **llamadas a herramientas**. Un modelo
+  de Go que no cumpla no sirve, aunque sea barato. Sus tareas auxiliares (títulos, compresión) usan el mismo modelo.
+- Los límites de Go son por modelo y se comparten con Sloth: 20 % del mes cada 5 horas, 50 % por semana, 100 % al mes.
+  Hermes y los agentes de Sloth gastan del mismo cupo. Los avisos por webhook no gastan nada (`deliver_only`).
+- Las condiciones dicen que Go es «para OpenCode y otros agentes de código que hacen peticiones parecidas», y que vigilan
+  el abuso. Hermes como agente de chat es uso normal; no se usa Go para otra cosa.
+
+Sin confirmar (se comprueba al instalar):
+- La URL base. La doc de Hermes dice `/zen/go/v1` y la de Go dice `https://opencode.ai/inference/go/`. Se usa la que
+  traiga Hermes y, si falla, se mira `…/v1/models`.
+- Qué ids de modelo acepta Hermes bajo `opencode-go`. Se elige con `hermes model` entre los que él enseñe, y se
+  comprueba que lleve herramientas y 64 000 de contexto.
+- Si Hermes habla con Go por chat/completions o por messages en cada modelo.
+
 ## La máquina: Raspberry Pi Zero
 
 Esto choca con lo que Sloth ya sabe de sí mismo:
